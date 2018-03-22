@@ -1,6 +1,6 @@
 
 #include "stdafx.h"
-#include "Tank.h"
+#include "Tank.hpp"
 Tank::Tank() {
 	direction_ = D_NOTHING;
 	coordinates_ = { 1,1 };
@@ -29,7 +29,7 @@ void Tank::Move() {
 		break;
 	}
 }
-COORD Tank::GetNextCoord() {
+COORD Tank::GetNextCoord()  const {
 	switch (direction_)
 	{
 	case(D_UP):
@@ -52,11 +52,11 @@ void Tank::ChangeDirection(Direction direction) {
 	direction_ = direction;
 }
 
-Direction Tank::GetDirection() {
+Direction Tank::GetDirection() const {
 	return direction_;
 }
 
-COORD Tank::GetCoord() {
+COORD Tank::GetCoord()const {
 	return coordinates_;
 }
 

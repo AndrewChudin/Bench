@@ -1,24 +1,19 @@
 
 #include "stdafx.h"
-#include "Wall.h"
+#include "Wall.hpp"
 Wall::Wall(COORD coordinates) {
 	coordinates_ = coordinates;
 }
 bool Wall::GetDamage() {
-	if (strength_ == 1)
-		return true;
 	strength_--;
-	return false;
+	return strength_ <= 1;
 }
 
-bool Wall::IsDamaged() {
-	if (strength_ != 2)
-		return true;
-	else
-		return false;
+bool Wall::IsDamaged()  const {
+	return strength_ != 2;
 }
 
-COORD Wall::GetCoord() {
+COORD Wall::GetCoord()  const {
 	return coordinates_;
 }
 

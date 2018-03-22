@@ -1,8 +1,5 @@
-
-#if !defined(_TANK_H)
-#define _TANK_H
+#pragma once
 #include "stdafx.h"
-
 
 class Tank {
 public:
@@ -10,12 +7,10 @@ public:
 	Tank(Direction direction, COORD coords);
 	void Move();
 	void ChangeDirection(Direction direction);
-	Direction GetDirection();
-	COORD GetCoord();
-	COORD GetNextCoord();
-protected:
+	Direction GetDirection() const;
+	COORD GetCoord() const;
+	COORD GetNextCoord() const;
+private:
 	Direction direction_;
 	COORD coordinates_;
 };
-
-#endif  //_TANK_H

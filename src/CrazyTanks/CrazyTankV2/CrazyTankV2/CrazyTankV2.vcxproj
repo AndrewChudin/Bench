@@ -143,16 +143,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Field.h" />
-    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Bullet.hpp" />
+    <ClInclude Include="DrawableBullet.hpp" />
+    <ClInclude Include="DrawableGold.hpp" />
+    <ClInclude Include="DrawableTank.hpp" />
+    <ClInclude Include="DrawableWall.hpp" />
+    <ClInclude Include="DrawStrategy.hpp" />
+    <ClInclude Include="Field.hpp" />
+    <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Tank.h" />
+    <ClInclude Include="Tank.hpp" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Wall.h" />
+    <ClInclude Include="Wall.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="DrawableBullet.cpp" />
+    <ClCompile Include="DrawableGold.cpp" />
+    <ClCompile Include="DrawableTank.cpp" />
+    <ClCompile Include="DrawableWall.cpp" />
+    <ClCompile Include="DrawStrategy.cpp" />
     <ClCompile Include="mainWindow.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="Renderer.cpp" />

@@ -1,20 +1,23 @@
-
-#if !defined(_FIELD_H)
-#define _FIELD_H
+#pragma once
 #include "stdafx.h"
+#include "Tank.hpp"
+#include "Wall.hpp"
+#include "Bullet.hpp"
 
-#include "Tank.h"
-#include "Wall.h"
-#include "Bullet.h"
 class Field {
 public:
-	Field();
+	Field(int field_height, int field_width);
 	void CreateField();
 	void TanksStep();
 	void BulletsStep();
 	void PlayerStep();
+	const std::vector<Tank>& GetTanks();
+	const std::vector<Wall>& GetWalls();
+	const std::vector<Bullet>& GetBullets();
+	Tank GetCharacter();
+	COORD GetGoldCoord();
 	bool EndGameCheck();
-protected:
+private:
 	template <typename T>
 	int FindByCoords(COORD coordinates, std::vector<T> &vector);
 	void PlayerShot();
@@ -27,14 +30,13 @@ protected:
 	std::vector<Wall> walls_;
 	std::vector<Bullet> bullets_;
 	Tank character_;
-	const COORD gold_{24, 24};
+	COORD gold_;
 	int lives_ = 3;
 	int score_ = 0;
-	const int field_height_ = 25;
-	const int field_width_ = 50;
+	int field_height_;
+	int field_width_;
 	HANDLE std_in_ = nullptr;
-
+	HANDLE std_out_ = nullptr;
 	friend class Renderer;
 };
 
-#endif  //_FIELD_H

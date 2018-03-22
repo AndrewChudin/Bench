@@ -1,9 +1,20 @@
-
 #include "stdafx.h"
-#include "Field.h"
-Field::Field() {
-	character_ = Tank(D_UP, { 24, 22 });
+#include "Field.hpp"
+
+#define ROTATION_CHANCE 60 
+#define SHOT_CHANCE	20 
+
+Field::Field(int field_height, int field_width) {
+	field_height_ = field_height;
+	field_width_ = field_width;
+	gold_ = { (short)field_width_ / 2, (short)field_height_ - 1 };
+	character_ = Tank(D_UP, { (short)field_width/2, (short)field_height - 3 });
 	std_in_ = GetStdHandle(STD_INPUT_HANDLE);
+	std_out_ = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cursorInfo;
+	cursorInfo.dwSize = 1;
+	cursorInfo.bVisible = FALSE;
+	SetConsoleCursorInfo(std_out_, &cursorInfo);
 }
 
 void Field::CreateField() {
@@ -12,9 +23,11 @@ void Field::CreateField() {
 }
 
 void Field::TanksStep() {
+	int a = (int)&tanks_;
+	int b = (int)&walls_;
 	for (Tank &tank : tanks_) {
 		if (!TankShot(tank)) {
-			if (rand() % 100 < 60)
+			if (rand() % 100 < ROTATION_CHANCE)
 				tank.ChangeDirection(static_cast<Direction>(rand() % 4 + 1));
 			if (CheckCollision(tank.GetNextCoord()))
 				tank.Move();
@@ -117,13 +130,27 @@ void Field::PlayerStep() {
 	if (CheckCollision(character_.GetNextCoord()))
 		character_.Move();
 }
+const std::vector<Tank>& Field::GetTanks() {
+	return tanks_;
+}
 
+const std::vector<Wall>& Field::GetWalls() {
+	return walls_;
+}
+
+const std::vector<Bullet>& Field::GetBullets() {
+	return bullets_;
+}
+
+Tank Field::GetCharacter() {
+	return character_;
+}
+
+COORD Field::GetGoldCoord() {
+	return gold_;
+}
 bool Field::EndGameCheck() {
-	if (FindByCoords(gold_, bullets_) != -1 ||
-		lives_ <= 0 || tanks_.size() == 0 )
-		return true;
-	else
-		return false;
+	return  FindByCoords(gold_, bullets_) != -1 || lives_ <= 0 || tanks_.size() == 0;
 }
 
 template <typename T>
@@ -192,7 +219,7 @@ void Field::PlayerShot() {
 
 bool Field::TankShot(Tank &tank) {
 	COORD next_coord = tank.GetNextCoord();
-	if (rand() % 100 < 30)
+	if (rand() % 100 < SHOT_CHANCE)
 	{
 		COORD t_coord = tank.GetCoord();
 		// В золото

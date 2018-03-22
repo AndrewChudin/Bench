@@ -1,22 +1,22 @@
 
 #include "stdafx.h"
-#include "Bullet.h"
+#include "Bullet.hpp"
 Bullet::Bullet(Direction direction, COORD coordinates, bool is_enemy) {
 	direction_ = direction;
 	coordinates_ = coordinates;
 	is_enemy_ = is_enemy;
 }
 
-COORD Bullet::GetCoord() {
+COORD Bullet::GetCoord() const {
 	return coordinates_;
 }
-Direction Bullet::GetDirection() {
+Direction Bullet::GetDirection() const {
 	return direction_;
 }
-bool Bullet::IsEnemy() {
+bool Bullet::IsEnemy() const {
 	return is_enemy_;
 }
-COORD Bullet::GetNextCoord() {
+COORD Bullet::GetNextCoord() const{
 	switch (direction_)
 	{
 	case(D_UP):
