@@ -7,29 +7,31 @@
 class Field {
 public:
 	Field(int field_height, int field_width);
-	void CreateField();
-	void TanksStep();
-	void BulletsStep();
-	void PlayerStep();
-	const std::vector<Tank>& GetTanks();
-	const std::vector<Wall>& GetWalls();
-	const std::vector<Bullet>& GetBullets();
-	Tank GetCharacter();
-	COORD GetGoldCoord();
-	bool EndGameCheck();
+	void createField();
+	void tanksStep();
+	void bulletsStep();
+	void playerStep();
+	const std::vector<tank>& getTanks();
+	const std::vector<Wall>& getWalls();
+	const std::vector<Bullet>& getBullets();
+	const tank& getCharacter();
+	COORD getGoldCoord();
+	int getScore();
+	int getLives();
+	bool endGameCheck();
 private:
 	template <typename T>
-	int FindByCoords(COORD coordinates, std::vector<T> &vector);
-	void PlayerShot();
-	bool TankShot(Tank &tank);
-	void CreateTanks();
-	void CreateWalls();
-	bool CheckCollision(COORD coordinates);
+	int findByCoords(COORD coordinates, std::vector<T> &vector);
+	void playerShot();
+	bool tankShot(tank &tank);
+	void createTanks();
+	void createWalls();
+	bool checkCollision(COORD coordinates);
 
-	std::vector<Tank> tanks_;
+	std::vector<tank> tanks_;
 	std::vector<Wall> walls_;
 	std::vector<Bullet> bullets_;
-	Tank character_;
+	tank character_;
 	COORD gold_;
 	int lives_ = 3;
 	int score_ = 0;
@@ -37,6 +39,5 @@ private:
 	int field_width_;
 	HANDLE std_in_ = nullptr;
 	HANDLE std_out_ = nullptr;
-	friend class Renderer;
 };
 

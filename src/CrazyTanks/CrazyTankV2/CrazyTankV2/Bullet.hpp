@@ -3,12 +3,12 @@
 
 class Bullet {
 public:
-	bool Bullet::IsEnemy() const;
+	bool Bullet::isEnemy() const;
 	Bullet(Direction direction, COORD coords, bool is_enemy);
-	void Move();
-	Direction GetDirection() const;
-	COORD GetCoord() const;
-	COORD GetNextCoord() const;
+	void move();
+	Direction getDirection() const;
+	COORD getCoord() const;
+	COORD getNextCoord() const;
 private:
 	Direction direction_;
 	bool is_enemy_;

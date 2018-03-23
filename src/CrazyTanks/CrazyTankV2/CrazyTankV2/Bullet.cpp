@@ -7,16 +7,16 @@ Bullet::Bullet(Direction direction, COORD coordinates, bool is_enemy) {
 	is_enemy_ = is_enemy;
 }
 
-COORD Bullet::GetCoord() const {
+COORD Bullet::getCoord() const {
 	return coordinates_;
 }
-Direction Bullet::GetDirection() const {
+Direction Bullet::getDirection() const {
 	return direction_;
 }
-bool Bullet::IsEnemy() const {
+bool Bullet::isEnemy() const {
 	return is_enemy_;
 }
-COORD Bullet::GetNextCoord() const{
+COORD Bullet::getNextCoord() const{
 	switch (direction_)
 	{
 	case(D_UP):
@@ -36,7 +36,7 @@ COORD Bullet::GetNextCoord() const{
 	}
 }
 
-void Bullet::Move() {
+void Bullet::move() {
 	switch (direction_)
 	{
 	case(D_UP): coordinates_.Y--; break;

@@ -1,15 +1,15 @@
 
 #include "stdafx.h"
 #include "Tank.hpp"
-Tank::Tank() {
+tank::tank() {
 	direction_ = D_NOTHING;
 	coordinates_ = { 1,1 };
 }
-Tank::Tank(Direction direction, COORD coordinates) {
+tank::tank(Direction direction, COORD coordinates) {
 	direction_ = direction;
 	coordinates_ = coordinates;
 }
-void Tank::Move() {
+void tank::move() {
 
 	switch (direction_)
 	{
@@ -29,7 +29,7 @@ void Tank::Move() {
 		break;
 	}
 }
-COORD Tank::GetNextCoord()  const {
+COORD tank::getNextCoord()  const {
 	switch (direction_)
 	{
 	case(D_UP):
@@ -48,15 +48,15 @@ COORD Tank::GetNextCoord()  const {
 			 break;
 	}
 }
-void Tank::ChangeDirection(Direction direction) {
+void tank::changeDirection(Direction direction) {
 	direction_ = direction;
 }
 
-Direction Tank::GetDirection() const {
+Direction tank::getDirection() const {
 	return direction_;
 }
 
-COORD Tank::GetCoord()const {
+COORD tank::getCoord()const {
 	return coordinates_;
 }
 

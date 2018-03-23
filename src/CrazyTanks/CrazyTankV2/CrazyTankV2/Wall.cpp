@@ -4,16 +4,16 @@
 Wall::Wall(COORD coordinates) {
 	coordinates_ = coordinates;
 }
-bool Wall::GetDamage() {
+bool Wall::getDamage() {
 	strength_--;
 	return strength_ <= 1;
 }
 
-bool Wall::IsDamaged()  const {
+bool Wall::isDamaged()  const {
 	return strength_ != 2;
 }
 
-COORD Wall::GetCoord()  const {
+COORD Wall::getCoord()  const {
 	return coordinates_;
 }
 
