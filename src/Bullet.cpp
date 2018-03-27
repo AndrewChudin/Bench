@@ -1,16 +1,17 @@
 
 #include "stdafx.h"
 #include "Bullet.hpp"
-Bullet::Bullet(Direction direction, COORD coordinates, bool is_enemy) {
+#include "Constants.h"
+Bullet::Bullet(const Direction& direction, const COORD& coordinates, bool is_enemy) {
 	direction_ = direction;
 	coordinates_ = coordinates;
 	is_enemy_ = is_enemy;
 }
 
-COORD Bullet::getCoord() const {
+const COORD& Bullet::getCoord() const {
 	return coordinates_;
 }
-Direction Bullet::getDirection() const {
+const Direction& Bullet::getDirection() const {
 	return direction_;
 }
 bool Bullet::isEnemy() const {

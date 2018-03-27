@@ -6,14 +6,14 @@ Wall::Wall(COORD coordinates) {
 }
 bool Wall::getDamage() {
 	strength_--;
-	return strength_ <= 1;
+	return strength_ <= 0;
 }
 
 bool Wall::isDamaged()  const {
-	return strength_ != 2;
+	return strength_ != WALL_STRENGTH;
 }
 
-COORD Wall::getCoord()  const {
+const COORD& Wall::getCoord()  const {
 	return coordinates_;
 }
 

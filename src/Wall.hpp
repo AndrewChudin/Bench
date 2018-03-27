@@ -1,14 +1,18 @@
-#pragma once
+#ifndef WALL_HPP
+#define WALL_HPP
+
 #include "stdafx.h"
+#include "Constants.h"
 
 class Wall {
 public:
 	Wall(COORD coordinates);
 	bool getDamage();
 	bool isDamaged() const;
-	COORD getCoord() const;
+	const COORD& getCoord() const;
 private:
-	char strength_ = 2;
+	int strength_ = WALL_STRENGTH;
 	COORD coordinates_;
 };
 
+#endif

@@ -4,12 +4,10 @@
 #define ROTATION_CHANCE 60 
 #define SHOT_CHANCE	20 
 
-Field::Field(int field_height, int field_width) {
+Field::Field(short field_height, short field_width): character_(D_UP, { field_width / 2, field_height - 3 }) {
 	field_height_ = field_height;
 	field_width_ = field_width;
 	gold_ = { (short)field_width_ / 2, (short)field_height_ - 1 };
-	character_ = tank(D_UP, { (short)field_width/2, (short)field_height - 3 });
-	std_in_ = GetStdHandle(STD_INPUT_HANDLE);
 	std_out_ = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO cursorInfo;
 	cursorInfo.dwSize = 1;
@@ -18,6 +16,10 @@ Field::Field(int field_height, int field_width) {
 }
 
 void Field::createField() {
+	tanks_.clear();
+	walls_.clear();
+	bullets_.clear();
+	character_.setCoord({ field_width_ / 2, field_height_ - 3 });
 	createTanks();
 	createWalls();
 }
@@ -25,7 +27,7 @@ void Field::createField() {
 void Field::tanksStep() {
 	int a = (int)&tanks_;
 	int b = (int)&walls_;
-	for (tank &tank : tanks_) {
+	for (Tank &tank : tanks_) {
 		if (!tankShot(tank)) {
 			if (rand() % 100 < ROTATION_CHANCE)
 				tank.changeDirection(static_cast<Direction>(rand() % 4 + 1));
@@ -104,19 +106,8 @@ bool Field::checkCollision(COORD coordinates) {
 	return true;
 }
 
-void Field::playerStep() {
-	INPUT_RECORD input;
-	DWORD nr;
-	WORD key = 0;
+void Field::playerStep(WORD key) {
 
-	PeekConsoleInput(std_in_, &input, 1, &nr);
-	if (nr > 0) {
-		if (input.EventType == KEY_EVENT)
-			if (input.Event.KeyEvent.bKeyDown)
-				key = input.Event.KeyEvent.wVirtualKeyCode;
-
-		FlushConsoleInputBuffer(std_in_);
-	}
 	switch (key)
 	{
 	case(VK_LEFT): character_.changeDirection(D_LEFT); break;
@@ -130,7 +121,11 @@ void Field::playerStep() {
 	if (checkCollision(character_.getNextCoord()))
 		character_.move();
 }
-const std::vector<tank>& Field::getTanks() {
+COORD Field::getSize()
+{
+	return { field_width_, field_height_ };
+}
+const std::vector<Tank>& Field::getTanks() {
 	return tanks_;
 }
 
@@ -142,11 +137,11 @@ const std::vector<Bullet>& Field::getBullets() {
 	return bullets_;
 }
 
-const tank& Field::getCharacter() {
+const Tank& Field::getCharacter() {
 	return character_;
 }
 
-COORD Field::getGoldCoord() {
+const COORD& Field::getGoldCoord() {
 	return gold_;
 }
 
@@ -173,20 +168,20 @@ int Field::findByCoords(COORD coordinates, std::vector<T> &vector) {
 void Field::createTanks() {
 	COORD new_coord, exisiting_coord;
 	bool suitable;
-	for (int n = 0; n < 12; n++) {
+	for (int n = 0; n < ENEMIES_AMOUNT; n++) {
 		do {
 			new_coord = { (short)(rand() % (field_width_ - 2) + 1),(short)(rand() % (field_height_ - 5) + 1 )};
 			suitable = true;
 			if (!checkCollision(new_coord))
 				suitable =	false;
 			else
-				for (tank existing_tank : tanks_) {
+				for (Tank existing_tank : tanks_) {
 					exisiting_coord = existing_tank.getCoord();
 					if (abs(exisiting_coord.X - new_coord.X) <= 2 && abs(exisiting_coord.X - new_coord.X) <= 2)
 						suitable = false;
 				}
 		} while (!suitable);
-		tanks_.push_back(tank(static_cast<Direction>(rand() % 4 + 1), new_coord));
+		tanks_.push_back(Tank(static_cast<Direction>(rand() % 4 + 1), new_coord));
 	}
 	
 }
@@ -197,7 +192,7 @@ void Field::createWalls() {
 		walls_.push_back(Wall({ x,gold_.Y-1 }));
 	walls_.push_back(Wall({ gold_.X - 1,gold_.Y }));
 	walls_.push_back(Wall({ gold_.X + 1,gold_.Y }));
-	for (int n = 0; n < 15; n++) {
+	for (int n = 0; n < WALLS_AMOUNT; n++) {
 		do {
 			new_coord = { (short)(rand() % (field_width_ - 2) + 1),(short)(rand() % (field_height_ - 2) + 1) };
 		} while (!checkCollision(new_coord));
@@ -224,7 +219,7 @@ void Field::playerShot() {
 		bullets_.push_back(Bullet(character_.getDirection(), next_coord, false));
 }
 
-bool Field::tankShot(tank &tank) {
+bool Field::tankShot(Tank &tank) {
 	COORD next_coord = tank.getNextCoord();
 	if (rand() % 100 < SHOT_CHANCE)
 	{
