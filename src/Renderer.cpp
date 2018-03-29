@@ -122,7 +122,7 @@ void Renderer::drawGold(const COORD& coordinates) {
 	write("$", coordinates, GOLD_LOOK);
 }
 
-void Renderer::refreshIndicators(Field &field, std::chrono::time_point<std::chrono::steady_clock> start_time) {
+void Renderer::refreshIndicators(Field &field, time_p start_time) {
 	//счет
 	char score_str[3] = { 0 };
 	_itoa(field.getScore(), score_str, 10);

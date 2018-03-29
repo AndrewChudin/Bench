@@ -145,10 +145,11 @@ const COORD& Field::getGoldCoord() {
 	return gold_;
 }
 
-int Field::getScore() {
+const int& Field::getScore() {
 	return score_;
 }
-int Field::getLives() {
+
+const int& Field::getLives() {
 	return lives_;
 }
 bool Field::endGameCheck() {

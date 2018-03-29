@@ -13,7 +13,7 @@ Game::Game(): field_(FIELD_HEIGHT, FIELD_WIDTH)
 
 void Game::mainCycle()
 {
-	auto start = std::chrono::high_resolution_clock::now();
+	time_p start = std::chrono::high_resolution_clock::now();
 	do {
 		field_.createField();
 		renderer_.init(field_);

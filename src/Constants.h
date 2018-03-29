@@ -4,6 +4,8 @@
 
 #include  "stdafx.h"
 
+typedef std::chrono::time_point<std::chrono::steady_clock> time_p;
+
 const short FIELD_HEIGHT = 25;
 const short FIELD_WIDTH = 49;
 

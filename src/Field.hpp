@@ -20,8 +20,8 @@ public:
 	const std::vector<Bullet>& getBullets();
 	const Tank& getCharacter();
 	const COORD& getGoldCoord();
-	int getScore();
-	int getLives();
+	const int& getScore();
+	const int& getLives();
 	bool endGameCheck();
 private:
 	template <typename T>
